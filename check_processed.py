@@ -1,7 +1,7 @@
 # check_processed.py
 import pandas as pd
 
-CSV = r"C:/Users/naren/OneDrive/Desktop/PROJECT/python/processed.csv"
+CSV = "/Users/hrishikeshduraisamy/Desktop/Portfolio/project/processed.csv"
 
 # Try reading without the deprecated argument; allow errors in parsing and show basic info
 try:
