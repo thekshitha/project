@@ -1,7 +1,7 @@
 # inspect_bins.py
 import pandas as pd
 
-CSV = "06 2020-06-13_10h13m40s.csv"   # relative filename in this folder
+CSV = "06 2020-06-13_10h13m40s.csv"
 
 # read only header (first row)
 df = pd.read_csv(CSV, nrows=1)

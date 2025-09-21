@@ -72,8 +72,20 @@ def main(args):
         else:
             raise RuntimeError("Cannot infer frequency bin centers. Provide --freq_start and --freq_step.")
 
-    # define channel_map automatically for common WiFi 2.4 GHz channels (adjust if needed)
-    if args.channel_set == '2.4GHz_wifi':
+    # define channel_map based on frequency range in the data
+    if args.channel_set == 'auto':
+        # Get min and max frequency from bin_freqs
+        min_freq = min(bin_freqs)
+        max_freq = max(bin_freqs)
+        # Create 5 evenly spaced channels
+        num_channels = 5
+        channel_width = (max_freq - min_freq) / num_channels
+        channel_map = []
+        for cid in range(num_channels):
+            start = min_freq + cid * channel_width
+            end = start + channel_width
+            channel_map.append((cid, start, end))
+    elif args.channel_set == '2.4GHz_wifi':
         # create 20 MHz channels across 2.4-2.5 GHz
         channel_map = []
         start = 2.4
@@ -138,7 +150,7 @@ if __name__ == "__main__":
     p.add_argument('--slot_ms', type=int, default=500)
     p.add_argument('--freq_start', type=float, default=None)
     p.add_argument('--freq_step', type=float, default=None)
-    p.add_argument('--channel_set', default='2.4GHz_wifi')
+    p.add_argument('--channel_set', default='auto')
     p.add_argument('--channel_map', nargs='*', type=float, help="flat list of triples cid fmin fmax", default=None)
     args = p.parse_args()
 
